@@ -1,0 +1,248 @@
+{
+  "title": "Waste Collection Schedule",
+  "config": {
+    "abort": {
+      "already_configured": "To źródło zostało już skonfigurowane."
+    },
+    "step": {
+      "user": {
+        "title": "Wybierz kraj",
+        "data": {
+          "country": "Kraj"
+        },
+        "data_description": {
+          "country": "Wybierz swój kraj lub *Generic*, jeśli chcesz skonfigurować źródło *ICS*."
+        }
+      },
+      "source": {
+        "title": "Wybierz źródło",
+        "description": "Wybierz z listy swojego dostawcę usługi.",
+        "data": {
+          "name": "Źródło"
+        }
+      },
+      "flow_type": {
+        "title": "Wybierz zakres konfiguracji",
+        "description": "Wybierz, jak szczegółowo chcesz skonfigurować integrację. Zostaw puste, jeśli wystarczy Ci podstawowy kalendarz.",
+        "data": {
+          "show_customize_config": "Pokaż dostosowanie rodzajów odbioru",
+          "show_sensor_config": "Pokaż konfigurację czujników"
+        },
+        "data_description": {
+          "show_customize_config": "Zaznacz, jeśli chcesz dostosować rodzaje odbioru.",
+          "show_sensor_config": "Zaznacz, jeśli chcesz skonfigurować czujniki."
+        }
+      },
+      "customize_select": {
+        "title": "Dostosowanie rodzajów odbioru: wybór (opcjonalnie)",
+        "description": "Wybierz rodzaje odbioru, które chcesz dostosować w następnym kroku.",
+        "data": {
+          "type": "Rodzaj (opcjonalnie)"
+        },
+        "data_description": {
+          "type": "W następnym kroku będzie można zmienić nazwę, ikonę, użyć osobnego kalendarza lub ukryć rodzaj odbioru."
+        }
+      },
+      "customize": {
+        "title": "Dostosowanie rodzaju odbioru ({index}/{total}): {type}",
+        "description": "Dostosuj {type}. Możesz zostawić wszystkie pola puste, aby użyć wartości domyślnych.",
+        "data": {
+          "alias": "Alias",
+          "show": "Pokaż",
+          "icon": "Ikona",
+          "picture": "Obrazek",
+          "use_dedicated_calendar": "Użyj osobnego kalendarza",
+          "dedicated_calendar_title": "Tytuł osobnego kalendarza"
+        },
+        "data_description": {
+          "alias": "Nowa nazwa rodzaju odbioru (tylko jeśli chcesz ją zmienić).",
+          "show": "Odznacz, aby ukryć ten rodzaj odbioru.",
+          "icon": "Ikona rodzaju odbioru (tylko jeśli chcesz ją zmienić).",
+          "picture": "Ścieżka do obrazka dla tego rodzaju odbioru.",
+          "use_dedicated_calendar": "Zaznacz, jeśli ten rodzaj odbioru ma mieć własną encję kalendarza.",
+          "dedicated_calendar_title": "Tytuł encji osobnego kalendarza."
+        }
+      },
+      "args": {
+        "title": "Konfiguracja źródła",
+        "description": "Skonfiguruj swojego dostawcę usługi. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Tytuł kalendarza"
+        },
+        "data_description": {
+          "calendar_title": "Czytelniejsza nazwa kalendarza odpadów. Jeśli nic nie podasz, użyta zostanie nazwa zwrócona przez źródło."
+        }
+      },
+      "sensor": {
+        "title": "Utwórz czujnik „{sensor_number}”",
+        "description": "Konfiguruj po jednym czujniku naraz.",
+        "data": {
+          "name": "Nazwa czujnika",
+          "details_format": "Format szczegółów",
+          "count": "Liczba",
+          "leadtime": "Wyprzedzenie",
+          "value_template": "Szablon wartości",
+          "date_template": "Szablon daty",
+          "add_days_to": "Dodaj atrybut „daysTo”",
+          "event_index": "Indeks zdarzenia",
+          "types": "Rodzaje",
+          "skip": "Nie twórz czujnika",
+          "additional": "Dodaj kolejne czujniki"
+        },
+        "data_description": {
+          "details_format": "Format informacji w oknie szczegółów Home Assistanta. „upcoming”: lista nadchodzących odbiorów, „appointment_types”: lista rodzajów odpadów z datą najbliższego odbioru, „generic”: wszystkie atrybuty jako zwykłe typy Pythona, „hidden”: ukrywa atrybuty nadchodzących odbiorów.",
+          "count": "Ogranicza okno szczegółów do podanej liczby najbliższych odbiorów.",
+          "leadtime": "Ogranicza okno szczegółów do odbiorów w ciągu najbliższych X dni.",
+          "value_template": "Szablon Home Assistanta formatujący stan encji. Możesz użyć „value.date”, „value.daysTo”, „value.types”.",
+          "date_template": "Szablon Home Assistanta formatujący daty w oknie szczegółów encji, np. „value.date.strftime(\"%d.%m.%Y\")”.",
+          "add_days_to": "Dodaje do stanu encji atrybut „daysTo” z liczbą dni do najbliższego odbioru.",
+          "event_index": "Przypisuje czujnik do konkretnego odbioru wg kolejności. Najbliższy odbiór ma indeks 0. Przydatne, gdy chcesz mieć osobne czujniki dla pierwszego, drugiego, trzeciego odbioru...",
+          "types": "Filtruje rodzaje odpadów. Czujnik pokaże tylko pasujące odbiory. Jeśli w konfiguracji źródła użyto aliasu, podaj alias.",
+          "skip": "Po zaznaczeniu czujnik nie zostanie utworzony, a powyższa konfiguracja zostanie pominięta.",
+          "additional": "Po zaznaczeniu, po zapisaniu tego czujnika pojawi się pytanie o kolejny."
+        }
+      },
+      "reconfigure": {
+        "title": "Ponowna konfiguracja źródła",
+        "description": "Skonfiguruj swojego dostawcę usługi. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Tytuł kalendarza"
+        }
+      }
+    },
+    "error": {
+      "invalid_weekday": "Nieprawidłowy dzień tygodnia. Podaj poprawny dzień (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Nieprawidłowa liczba. Podaj poprawną wartość liczbową.",
+      "invalid_weekdays": "Nieprawidłowy format dnia tygodnia. Podaj jeden z (MO, TU, WE, TH, FR, SA, SU) albo słownik w postaci MO: 1.",
+      "invalid_source": "Nie wybrano źródła. Wybierz poprawne źródło.",
+      "fetch_error": "Źródło zwróciło nieprawidłową odpowiedź: „{fetch_error_message}”. Sprawdź podane dane i spróbuj ponownie.",
+      "invalid_arg": "Nieprawidłowy argument: „{invalid_arg_message}”",
+      "fetch_empty": "Źródło zwróciło pustą odpowiedź. Sprawdź podane dane i spróbuj ponownie.",
+      "invalid_template": "Szablon jest nieprawidłowy. Sprawdź składnię i spróbuj ponownie.",
+      "skip_additional": "Nie można jednocześnie pominąć bieżącego czujnika i dodać kolejnych.",
+      "name_exists": "Czujnik o tej nazwie już istnieje. Wybierz inną nazwę.",
+      "preset_selected": "Nie można jednocześnie wybrać gotowego ustawienia i podać własnych wartości.",
+      "sensor_name_empty": "Nazwa czujnika nie może być pusta. Podaj nazwę.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Nie można podać tytułu osobnego kalendarza bez włączenia osobnego kalendarza."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Zaktualizuj ustawienia Waste Collection Schedule.",
+        "data": {
+          "sensor_select": "Czujniki do zmiany",
+          "customize_select": "Dostosowania do zmiany",
+          "calendar_title": "Tytuł kalendarza",
+          "separator": "Separator",
+          "fetch_time": "Godzina pobierania",
+          "random_fetch_time_offset": "Losowe przesunięcie godziny pobierania",
+          "day_switch_time": "Godzina zmiany dnia",
+          "fetch_interval_days": "Odstęp między pobraniami (dni)",
+          "day_offset": "Przesunięcie dni",
+          "ignore_duplicates": "Ignoruj zduplikowane wpisy w jednym dniu",
+          "show_original_label": "Pokaż oryginalną etykietę dostawcy"
+        },
+        "data_description": {
+          "sensor_select": "Wybierz czujnik, który chcesz zmienić (wybierz „Dodaj nowy czujnik”, aby utworzyć nowy).",
+          "customize_select": "Wybierz dostosowanie, które chcesz zmienić (albo nowe, aby je utworzyć).",
+          "calendar_title": "Czytelniejsza nazwa kalendarza odpadów. Jeśli nic nie podasz, użyta zostanie nazwa zwrócona przez źródło.",
+          "separator": "Używany do łączenia wpisów, gdy źródło zwróci kilka wartości dla jednego dnia.",
+          "fetch_time": "Godzina w formacie „HH:MM”, o której Home Assistant pobiera od dostawcy aktualny harmonogram.",
+          "random_fetch_time_offset": "Losowo przesuwa godzinę pobierania o maksymalnie X minut. Pozwala rozłożyć zapytania w czasie i uniknąć szczytowego obciążenia dostawców.",
+          "day_switch_time": "Godzina w formacie „HH:MM”, o której Home Assistant porzuca bieżący wpis i przechodzi do następnego.",
+          "fetch_interval_days": "Określa, jak często Home Assistant pobiera odbiory z tego źródła. Domyślnie 1 dzień. Wartość 2 oznacza pobieranie co 2 dni.",
+          "day_offset": "Przesunięcie daty odbioru w dniach (może być ujemne). Bez podanej wartości używane jest 0.",
+          "ignore_duplicates": "Po włączeniu zduplikowane odbiory tego samego rodzaju w tym samym dniu są usuwane — zostaje jeden wpis na rodzaj dziennie.",
+          "show_original_label": "Po włączeniu (domyślnie) część źródeł zachowuje w opisie odbioru oryginalną etykietę dostawcy (np. dokładną nazwę pojemnika), nawet po zmapowaniu jej na standardowy rodzaj odpadu. Wyłącz, aby ją ukryć."
+        }
+      },
+      "customize": {
+        "title": "Zmień/utwórz dostosowanie rodzaju odbioru ({index}/{total}): {type}",
+        "description": "Zmień lub utwórz dostosowanie dla „{type}”. Możesz zostawić wszystkie pola puste, aby użyć wartości domyślnych.",
+        "data": {
+          "delete": "Usuń",
+          "alias": "Alias",
+          "show": "Pokaż",
+          "icon": "Ikona",
+          "picture": "Obrazek",
+          "use_dedicated_calendar": "Użyj osobnego kalendarza",
+          "dedicated_calendar_title": "Tytuł osobnego kalendarza"
+        },
+        "data_description": {
+          "delete": "Usuń to dostosowanie.",
+          "alias": "Nowa nazwa rodzaju odbioru (tylko jeśli chcesz ją zmienić).",
+          "show": "Odznacz, aby ukryć ten rodzaj odbioru.",
+          "icon": "Ikona rodzaju odbioru (tylko jeśli chcesz ją zmienić).",
+          "picture": "Ścieżka do obrazka dla tego rodzaju odbioru.",
+          "use_dedicated_calendar": "Zaznacz, jeśli ten rodzaj odbioru ma mieć własną encję kalendarza.",
+          "dedicated_calendar_title": "Tytuł encji osobnego kalendarza."
+        }
+      },
+      "sensor": {
+        "title": "Zmień/utwórz czujnik „{sensor_number}”",
+        "description": "Konfiguruj po jednym czujniku naraz.",
+        "data": {
+          "delete": "Usuń",
+          "name": "Nazwa czujnika",
+          "details_format": "Format szczegółów",
+          "count": "Liczba",
+          "leadtime": "Wyprzedzenie",
+          "value_template": "Szablon wartości",
+          "date_template": "Szablon daty",
+          "add_days_to": "Dodaj atrybut „daysTo”",
+          "event_index": "Indeks zdarzenia",
+          "types": "Rodzaje",
+          "skip": "Nie twórz czujnika",
+          "additional": "Dodaj kolejne czujniki"
+        },
+        "data_description": {
+          "delete": "Usuń to dostosowanie.",
+          "details_format": "Format informacji w oknie szczegółów Home Assistanta. „upcoming”: lista nadchodzących odbiorów, „appointment_types”: lista rodzajów odpadów z datą najbliższego odbioru, „generic”: wszystkie atrybuty jako zwykłe typy Pythona, „hidden”: ukrywa atrybuty nadchodzących odbiorów.",
+          "count": "Ogranicza okno szczegółów do podanej liczby najbliższych odbiorów.",
+          "leadtime": "Ogranicza okno szczegółów do odbiorów w ciągu najbliższych X dni.",
+          "value_template": "Szablon Home Assistanta formatujący stan encji. Możesz użyć „value.date”, „value.daysTo”, „value.types”.",
+          "date_template": "Szablon Home Assistanta formatujący daty w oknie szczegółów encji, np. „value.date.strftime(\"%d.%m.%Y\")”.",
+          "add_days_to": "Dodaje do stanu encji atrybut „daysTo” z liczbą dni do najbliższego odbioru.",
+          "event_index": "Przypisuje czujnik do konkretnego odbioru wg kolejności. Najbliższy odbiór ma indeks 0. Przydatne, gdy chcesz mieć osobne czujniki dla pierwszego, drugiego, trzeciego odbioru...",
+          "types": "Filtruje rodzaje odpadów. Czujnik pokaże tylko pasujące odbiory. Jeśli w konfiguracji źródła użyto aliasu, podaj alias.",
+          "skip": "Po zaznaczeniu czujnik nie zostanie utworzony, a powyższa konfiguracja zostanie pominięta.",
+          "additional": "Po zaznaczeniu, po zapisaniu tego czujnika pojawi się pytanie o kolejny."
+        }
+      }
+    },
+    "error": {
+      "time_format": "Godziny należy podawać w formacie HH:MM.",
+      "invalid_template": "Szablon jest nieprawidłowy. Sprawdź składnię i spróbuj ponownie.",
+      "name_exists": "Czujnik o tej nazwie już istnieje. Wybierz inną nazwę.",
+      "preset_selected": "Nie można jednocześnie wybrać gotowego ustawienia i podać własnych wartości.",
+      "sensor_name_empty": "Nazwa czujnika nie może być pusta. Podaj nazwę.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Nie można podać tytułu osobnego kalendarza bez włączenia osobnego kalendarza."
+    },
+    "abort": {}
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "upcoming": "Nadchodzące",
+        "appointment_types": "Rodzaje odbioru",
+        "generic": "Ogólny",
+        "hidden": "Ukryty"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "yearly": "Rocznie",
+        "monthly": "Miesięcznie",
+        "weekly": "Tygodniowo",
+        "daily": "Codziennie"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Dodaj nowy czujnik"
+      }
+    }
+  },
+  "issues": {}
+}
