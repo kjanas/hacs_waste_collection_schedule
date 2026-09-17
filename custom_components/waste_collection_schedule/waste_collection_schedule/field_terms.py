@@ -28,7 +28,7 @@ from typing import Any
 
 from waste_collection_schedule.waste_types import SUPPORTED_LANGUAGES
 
-_LANGS = ("en", "de", "fr", "it", "nl")
+_LANGS = ("en", "de", "fr", "it", "nl", "pl")
 
 
 def as_text(value: object) -> str:
@@ -85,14 +85,15 @@ def _term(
     fr: str,
     it: str,
     nl: str,
+    pl: str,
     *,
-    desc: tuple[str, str, str, str, str] | None = None,
+    desc: tuple[str, str, str, str, str, str] | None = None,
     coerce: "Callable[[Any], Any] | None" = None,
 ) -> FieldTerm:
-    """Define a term. ``desc`` is the help text as ``(en, de, fr, it, nl)``."""
+    """Define a term. ``desc`` is the help text as ``(en, de, fr, it, nl, pl)``."""
     return FieldTerm(
         key=key,
-        labels={"en": en, "de": de, "fr": fr, "it": it, "nl": nl},
+        labels={"en": en, "de": de, "fr": fr, "it": it, "nl": nl, "pl": pl},
         descriptions=dict(zip(_LANGS, desc, strict=True)) if desc else {},
         coerce=coerce,
     )
@@ -106,12 +107,14 @@ MUNICIPALITY = _term(
     "Commune",
     "Comune",
     "Gemeente",
+    "Gmina",
     desc=(
         "The name of your municipality, as shown on the provider's website.",
         "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
         "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
         "Il nome del vostro comune, come indicato sul sito del fornitore.",
         "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+        "Nazwa gminy, tak jak widnieje na stronie dostawcy.",
     ),
 )
 CITY = _term(
@@ -121,12 +124,14 @@ CITY = _term(
     "Ville",
     "Città",
     "Plaats",
+    "Miejscowość",
     desc=(
         "Your city or town.",
         "Ihre Stadt oder Gemeinde.",
         "Votre ville ou village.",
         "La vostra città o paese.",
         "Uw stad of dorp.",
+        "Miasto lub miejscowość.",
     ),
 )
 DISTRICT = _term(
@@ -136,12 +141,14 @@ DISTRICT = _term(
     "Quartier",
     "Quartiere",
     "Wijk",
+    "Dzielnica",
     desc=(
         "Your district or part of the municipality.",
         "Ihr Ortsteil oder Stadtteil.",
         "Votre quartier ou partie de la commune.",
         "Il vostro quartiere o parte del comune.",
         "Uw wijk of deel van de gemeente.",
+        "Dzielnica lub część gminy.",
     ),
 )
 STREET = _term(
@@ -151,12 +158,14 @@ STREET = _term(
     "Rue",
     "Via",
     "Straat",
+    "Ulica",
     desc=(
         "Your street name.",
         "Ihr Straßenname.",
         "Le nom de votre rue.",
         "Il nome della vostra via.",
         "Uw straatnaam.",
+        "Nazwa ulicy.",
     ),
 )
 HOUSE_NUMBER = _term(
@@ -166,12 +175,14 @@ HOUSE_NUMBER = _term(
     "Numéro",
     "Numero civico",
     "Huisnummer",
+    "Numer domu",
     desc=(
         "Your house number.",
         "Ihre Hausnummer.",
         "Votre numéro de rue.",
         "Il vostro numero civico.",
         "Uw huisnummer.",
+        "Numer domu.",
     ),
     # YAML types a bare `4` as an int, and a house number is text everywhere it
     # is sent (it may be "4a"), so normalise rather than leave each source to.
@@ -184,12 +195,14 @@ POSTCODE = _term(
     "Code postal",
     "CAP",
     "Postcode",
+    "Kod pocztowy",
     desc=(
         "Your postcode.",
         "Ihre Postleitzahl.",
         "Votre code postal.",
         "Il vostro codice postale (CAP).",
         "Uw postcode.",
+        "Kod pocztowy.",
     ),
 )
 ADDRESS = _term(
@@ -199,29 +212,45 @@ ADDRESS = _term(
     "Adresse",
     "Indirizzo",
     "Adres",
+    "Adres",
     desc=(
         "Your full address.",
         "Ihre vollständige Adresse.",
         "Votre adresse complète.",
         "Il vostro indirizzo completo.",
         "Uw volledige adres.",
+        "Pełny adres.",
     ),
     # A pasted address routinely carries leading or trailing whitespace, which
     # breaks an exact-match lookup for a reason the user cannot see.
     coerce=as_text,
 )
-REGION = _term("region", "Region", "Region", "Région", "Regione", "Regio")
+REGION = _term("region", "Region", "Region", "Région", "Regione", "Regio", "Region")
 # Administrative levels above the municipality (used by German platforms whose
 # cascade is Bundesland -> Landkreis -> Kommune). fr/it/nl labels keep the
 # German "Land"/"Landkreis" where there is no close equivalent; review welcome.
-STATE = _term("state", "Federal State", "Bundesland", "Land", "Land", "Deelstaat")
+STATE = _term(
+    "state",
+    "Federal State",
+    "Bundesland",
+    "Land",
+    "Land",
+    "Deelstaat",
+    "Kraj związkowy",
+)
 # COUNTY and DISTRICT sit at opposite ends of the same hierarchy, so keep the
 # English labels distinct: a COUNTY (Landkreis) contains municipalities, while a
 # DISTRICT (Ortsteil) is a part of one. Both said "District" in English until
 # 2026-08, which made the choice a coin flip for anyone reading only that label,
 # and the German UI then said Landkreis where Ortsteil was meant.
 COUNTY = _term(
-    "county", "County", "Landkreis", "Arrondissement", "Circondario", "Landkreis"
+    "county",
+    "County",
+    "Landkreis",
+    "Arrondissement",
+    "Circondario",
+    "Landkreis",
+    "Powiat",
 )
 
 # --- Coordinates -------------------------------------------------------------
@@ -231,6 +260,7 @@ _MAP_HELP = (
     "Sélectionnez votre emplacement sur la carte.",
     "Selezionate la vostra posizione sulla mappa.",
     "Selecteer uw locatie op de kaart.",
+    "Wybierz lokalizację na mapie.",
 )
 LATITUDE = _term(
     "latitude",
@@ -239,6 +269,7 @@ LATITUDE = _term(
     "Latitude",
     "Latitudine",
     "Breedtegraad",
+    "Szerokość geograficzna",
     desc=_MAP_HELP,
 )
 LONGITUDE = _term(
@@ -248,12 +279,14 @@ LONGITUDE = _term(
     "Longitude",
     "Longitudine",
     "Lengtegraad",
+    "Długość geograficzna",
     desc=_MAP_HELP,
 )
 
 # --- Identifiers -------------------------------------------------------------
 UPRN = _term(
     "uprn",
+    "UPRN",
     "UPRN",
     "UPRN",
     "UPRN",
@@ -270,6 +303,8 @@ UPRN = _term(
         "https://www.findmyaddress.co.uk/",
         "Uw Unique Property Reference Number (UPRN). Vind het op "
         "https://www.findmyaddress.co.uk/",
+        "Twój Unique Property Reference Number (UPRN). Znajdziesz go na "
+        "https://www.findmyaddress.co.uk/",
     ),
     # A UPRN is a run of digits, but YAML types an unquoted one as an int and
     # every provider wants it as text. This was the single most repeated
@@ -283,6 +318,7 @@ LOCATION_ID = _term(
     "ID d'emplacement",
     "ID posizione",
     "Locatie-ID",
+    "ID lokalizacji",
 )
 AREA_ID = _term(
     "area_id",
@@ -291,6 +327,7 @@ AREA_ID = _term(
     "ID de zone",
     "ID area",
     "Gebied-ID",
+    "ID obszaru",
 )
 CITY_ID = _term(
     "city_id",
@@ -299,6 +336,7 @@ CITY_ID = _term(
     "ID de ville",
     "ID città",
     "Plaats-ID",
+    "ID miejscowości",
 )
 SERVICE_ID = _term(
     "service_id",
@@ -307,6 +345,7 @@ SERVICE_ID = _term(
     "ID de service",
     "ID servizio",
     "Service-ID",
+    "ID usługi",
 )
 CUSTOMER_NUMBER = _term(
     "customer_number",
@@ -315,6 +354,7 @@ CUSTOMER_NUMBER = _term(
     "Numéro de client",
     "Numero cliente",
     "Klantnummer",
+    "Numer klienta",
 )
 API_KEY = _term(
     "api_key",
@@ -323,6 +363,7 @@ API_KEY = _term(
     "Clé API",
     "Chiave API",
     "API-sleutel",
+    "Klucz API",
 )
 
 # --- Waste-specific ----------------------------------------------------------
@@ -333,12 +374,14 @@ WASTE_TYPES = _term(
     "Types de déchets",
     "Tipi di rifiuto",
     "Afvalsoorten",
+    "Rodzaje odpadów",
     desc=(
         "Optional filter: the waste types to include.",
         "Optionaler Filter: die einzuschließenden Abfallarten.",
         "Filtre facultatif : les types de déchets à inclure.",
         "Filtro facoltativo: i tipi di rifiuto da includere.",
         "Optioneel filter: de op te nemen afvalsoorten.",
+        "Filtr opcjonalny: rodzaje odpadów, które mają być uwzględnione.",
     ),
     # Rendered as a plain text field (no generic multi-select), so the
     # config-flow UI stores what the visitor typed as one comma separated
